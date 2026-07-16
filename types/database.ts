@@ -2,12 +2,6 @@
 // live project, this can be regenerated with:
 //   npx supabase gen types typescript --project-id <ref> > types/database.ts
 // (re-add the three RPC return types below if the generator drops them).
-//
-// NOTE: 0006_rate_limit.sql has not been applied to the live project yet (no DB
-// password / Management API token was available to run it programmatically) — paste
-// it into the Supabase SQL editor. Until then, check_rate_limit() calls fail closed
-// to "allowed" (see lib/rate-limit.ts), so login/register/checkout keep working
-// without rate limiting rather than breaking.
 
 export type OrderStatus =
   | "nuevo"

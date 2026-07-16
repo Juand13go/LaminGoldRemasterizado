@@ -18,13 +18,6 @@ in production, **P2** = tech debt / nice-to-have, safe to defer.
   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
   `SUPABASE_SERVICE_ROLE_KEY`, `CART_COOKIE_SECRET`, `NEXT_PUBLIC_WHATSAPP_NUMBER`
   under Project Settings -> Environment Variables once the project exists.
-- **[P1] `supabase/migrations/0006_rate_limit.sql` has not been applied to the live
-  project.** No DB password or Supabase Management API token was available to run it
-  programmatically (only the service-role data-API key, which can't execute DDL).
-  Paste it into the Supabase SQL editor (same process as 0001-0005, see
-  `scripts/apply-schema-manual.sql` for the pattern). Until applied, rate-limit checks
-  fail open (see `lib/rate-limit.ts`) so login/register/checkout keep working —
-  they're just not rate-limited yet.
 - **[P1] Supabase Auth "Site URL" / "Redirect URLs" still point at localhost.** This
   no longer blocks login or registration (see "Fixed this pass" below), but will bite
   the moment a password-reset or magic-link flow is added, since neither exists yet.
@@ -60,7 +53,8 @@ in production, **P2** = tech debt / nice-to-have, safe to defer.
   window limiter (`check_rate_limit` RPC + `rate_limits` table,
   `supabase/migrations/0006_rate_limit.sql`, wired up via `lib/rate-limit.ts`).
   Deliberately Postgres-backed rather than in-memory since Vercel serverless functions
-  don't share memory across invocations. **Not yet applied to the live DB — see above.**
+  don't share memory across invocations. Applied to the live project and verified live
+  (direct RPC calls confirmed it allows N attempts then blocks, as designed).
 - **Full checkout flow, register flow, and admin product creation were "never
   exercised through a real browser"** — all three now have Playwright specs
   (`tests/e2e/checkout.spec.ts`, `tests/e2e/register.spec.ts`,
