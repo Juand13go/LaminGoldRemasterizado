@@ -1,7 +1,13 @@
 // Hand-written to match supabase/migrations/*.sql. Once the schema is applied to the
 // live project, this can be regenerated with:
 //   npx supabase gen types typescript --project-id <ref> > types/database.ts
-// (re-add the two RPC return types below if the generator drops them).
+// (re-add the three RPC return types below if the generator drops them).
+//
+// NOTE: 0006_rate_limit.sql has not been applied to the live project yet (no DB
+// password / Management API token was available to run it programmatically) — paste
+// it into the Supabase SQL editor. Until then, check_rate_limit() calls fail closed
+// to "allowed" (see lib/rate-limit.ts), so login/register/checkout keep working
+// without rate limiting rather than breaking.
 
 export type OrderStatus =
   | "nuevo"
@@ -224,6 +230,14 @@ export interface Database {
           p_items: { product_id: string; quantity: number }[];
         };
         Returns: string;
+      };
+      check_rate_limit: {
+        Args: {
+          p_key: string;
+          p_max_attempts: number;
+          p_window_seconds: number;
+        };
+        Returns: boolean;
       };
     };
     Enums: Record<string, never>;

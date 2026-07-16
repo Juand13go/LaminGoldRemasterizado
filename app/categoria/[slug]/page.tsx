@@ -10,7 +10,7 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const category = await getCategoryBySlug(slug);
-  return { title: category ? `${category.title} - Lamin Gold` : "Categoria no encontrada" };
+  return { title: category ? `${category.title} - Lamin Gold` : "Categoría no encontrada" };
 }
 
 export default async function CategoryPage({ params }: Props) {
@@ -33,7 +33,7 @@ export default async function CategoryPage({ params }: Props) {
           <p className="page-subtitle">{category.description}</p>
         </div>
         <Link className="btn-outline" href="/catalogo">
-          Ver catalogo
+          Ver catálogo
         </Link>
       </div>
 
@@ -44,7 +44,7 @@ export default async function CategoryPage({ params }: Props) {
           ))}
         </div>
       ) : (
-        <p style={{ opacity: 0.75, marginTop: 16 }}>No hay productos en esta categoria por ahora.</p>
+        <p style={{ opacity: 0.75, marginTop: 16 }}>No hay productos en esta categoría por ahora.</p>
       )}
     </section>
   );

@@ -192,7 +192,7 @@ body{
   border: 1px solid var(--border-gold-35);
 }
 
-/* navbar links tipo boton (si los usas) */
+/* navbar links tipo botón (si los usas) */
 .navlink{
   display: inline-flex;
   align-items: center;
@@ -1060,7 +1060,7 @@ body.dark .checkout-card{
   box-shadow: var(--shadow-soft) !important;
 }
 
-/* Boton del toggle en navbar (si no existe en tu CSS) */
+/* Botón del toggle en navbar (si no existe en tu CSS) */
 .theme-toggle{
   background: rgba(255,255,255,.06);
   border: 1px solid var(--border);
@@ -1079,7 +1079,7 @@ body.dark .checkout-card{
   border-color: rgba(212,175,55,.35);
 }
 
-/* En modo claro, el toggle se ve limpio tambien */
+/* En modo claro, el toggle se ve limpio también */
 body:not(.dark) .theme-toggle{
   background: rgba(0,0,0,.04);
   color: #0B0B0B;
@@ -1115,7 +1115,7 @@ body.dark .card.product .desc{
   color: var(--text-muted) !important;
 }
 
-/* DETALLE de producto (lineas info/descripcion) */
+/* DETALLE de producto (líneas info/descripción) */
 body.dark .product-detail p,
 body.dark .product-detail .meta,
 body.dark .product-detail .specs,
@@ -1147,7 +1147,7 @@ body.dark .detail h3{
    DARK MODE – FIX CARD DESC & META
 ================================ */
 
-/* Descripcion del producto */
+/* Descripción del producto */
 body.dark .card-desc{
   color: var(--text-muted) !important;
 }
@@ -1176,7 +1176,7 @@ body.dark .product-meta b{
 }
 
 /* ================================
-   CHECKOUT – HINT (ultra especifico)
+   CHECKOUT – HINT (ultra específico)
 ================================ */
 
 .checkout-card .hint{
@@ -1222,10 +1222,10 @@ body.dark .alert{
 .alert-success{ border-color: rgba(80,255,160,.25); }
 
 /* ================================
-   HOME – CATEGORIAS SOLO TEXTO NEGRO
+   HOME – CATEGORÍAS SOLO TEXTO NEGRO
 ================================ */
 
-/* Cards de categorias: todo negro */
+/* Cards de categorías: todo negro */
 .card,
 .card *{
   color: #0B0B0B;
@@ -1239,7 +1239,7 @@ body.dark .alert{
   color: #0B0B0B;
 }
 
-/* Texto secundario un poco mas suave */
+/* Texto secundario un poco más suave */
 .card .muted{
   color: rgba(11,11,11,.65);
 }
@@ -1256,7 +1256,7 @@ body.dark .alert{
 }
 
 /* ================================
-   HOME – CATEGORIAS: NEGRO EN LIGHT / BLANCO EN DARK
+   HOME – CATEGORÍAS: NEGRO EN LIGHT / BLANCO EN DARK
 ================================ */
 
 /* ----- LIGHT (por defecto): todo negro, sin morado/azul ----- */
@@ -1300,7 +1300,7 @@ body.dark .card h3{
   color: var(--text) !important;
 }
 
-/* Descripcion */
+/* Descripción */
 body.dark .card .card-desc{
   color: var(--text-muted) !important;
 }
@@ -1316,7 +1316,7 @@ body.dark .card strong{
   color: var(--gold) !important;
 }
 
-/* Boton "Ver" dentro de la card */
+/* Botón "Ver" dentro de la card */
 body.dark .card .btn-outline{
   color: var(--text) !important;
   border-color: rgba(212,175,55,.35) !important;

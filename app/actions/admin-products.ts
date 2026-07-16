@@ -18,6 +18,38 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, "");
 }
 
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+
+// Sniffs the real file format from its magic bytes instead of trusting the
+// client-supplied `File.type`, which is just the browser's guess from the filename/
+// input `accept` hint and can be spoofed by renaming any file to end in .jpg.
+function sniffImageType(bytes: Uint8Array): "image/jpeg" | "image/png" | "image/webp" | null {
+  if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) return "image/jpeg";
+  if (
+    bytes[0] === 0x89 &&
+    bytes[1] === 0x50 &&
+    bytes[2] === 0x4e &&
+    bytes[3] === 0x47 &&
+    bytes[4] === 0x0d &&
+    bytes[5] === 0x0a &&
+    bytes[6] === 0x1a &&
+    bytes[7] === 0x0a
+  )
+    return "image/png";
+  if (
+    bytes[0] === 0x52 &&
+    bytes[1] === 0x49 &&
+    bytes[2] === 0x46 &&
+    bytes[3] === 0x46 &&
+    bytes[8] === 0x57 &&
+    bytes[9] === 0x45 &&
+    bytes[10] === 0x42 &&
+    bytes[11] === 0x50
+  )
+    return "image/webp";
+  return null;
+}
+
 export async function createProductAction(formData: FormData): Promise<void> {
   const parsed = productSchema.safeParse({
     name: formData.get("name"),
@@ -31,7 +63,7 @@ export async function createProductAction(formData: FormData): Promise<void> {
 
   if (!parsed.success) {
     redirect(
-      withFlash("/admin/products/new", "error", parsed.error.issues[0]?.message ?? "Datos invalidos.")
+      withFlash("/admin/products/new", "error", parsed.error.issues[0]?.message ?? "Datos inválidos.")
     );
   }
 
@@ -42,13 +74,25 @@ export async function createProductAction(formData: FormData): Promise<void> {
     redirect(withFlash("/admin/products/new", "error", "La imagen es obligatoria."));
   }
 
+  if (imageFile.size > MAX_IMAGE_BYTES) {
+    redirect(withFlash("/admin/products/new", "error", "La imagen no puede pesar más de 5MB."));
+  }
+
+  const headerBytes = new Uint8Array(await imageFile.slice(0, 12).arrayBuffer());
+  const sniffedType = sniffImageType(headerBytes);
+  if (!sniffedType) {
+    redirect(
+      withFlash("/admin/products/new", "error", "El archivo no es una imagen válida (jpg, png o webp).")
+    );
+  }
+
   const supabase = await createClient();
   const slug = `${slugify(parsed.data.name)}-${Date.now().toString(36)}`;
   const storagePath = `${slug}-${imageFile.name}`;
 
   const { error: uploadError } = await supabase.storage
     .from("product-images")
-    .upload(storagePath, imageFile, { contentType: imageFile.type });
+    .upload(storagePath, imageFile, { contentType: sniffedType });
 
   if (uploadError) {
     redirect(withFlash("/admin/products/new", "error", "No se pudo subir la imagen."));

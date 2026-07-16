@@ -38,7 +38,7 @@ export async function Navbar() {
 
         <nav className="navbar__links">
           <Link className="navlink" href="/catalogo">
-            Catalogo
+            Catálogo
           </Link>
 
           {user ? (

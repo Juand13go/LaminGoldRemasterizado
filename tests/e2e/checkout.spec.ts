@@ -18,6 +18,10 @@ test.describe("browse -> cart -> checkout -> WhatsApp handoff", () => {
     const productName = await firstCard.locator(".card-title").textContent();
 
     await firstCard.getByRole("button", { name: "Agregar al carrito" }).click();
+    // addToCartAction has no redirect(), so the click just triggers a background RSC
+    // fetch — wait for the navbar badge (revalidated by the action) before navigating
+    // away, otherwise goto("/carrito") can race the cart cookie actually being set.
+    await expect(page.locator(".cartbtn__badge")).toBeVisible();
 
     await page.goto("/carrito");
     await expect(page.locator(".cart__name").first()).toHaveText(productName?.trim() ?? "");

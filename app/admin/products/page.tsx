@@ -23,7 +23,7 @@ export default async function AdminProductsPage() {
           <h1 className="page-title" style={{ marginBottom: 6 }}>
             Productos
           </h1>
-          <p className="page-subtitle">Listado del catalogo.</p>
+          <p className="page-subtitle">Listado del catálogo.</p>
         </div>
 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -40,7 +40,7 @@ export default async function AdminProductsPage() {
         <div className="summary-box" style={{ marginTop: 14 }}>
           <strong>No hay productos cargados.</strong>
           <p className="muted" style={{ marginTop: 6 }}>
-            Crea el primero desde el boton &quot;Nuevo producto&quot;.
+            Crea el primero desde el botón &quot;Nuevo producto&quot;.
           </p>
         </div>
       ) : (
@@ -63,10 +63,10 @@ export default async function AdminProductsPage() {
                 <div className="cart__name">{product.name}</div>
                 <div className="muted" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                   <span>
-                    <strong>Categoria:</strong> {product.category?.label ?? ""}
+                    <strong>Categoría:</strong> {product.category?.label ?? ""}
                   </span>
                   <span>
-                    <strong>Bano:</strong> {product.goldType}
+                    <strong>Baño:</strong> {product.goldType}
                   </span>
                   <span>
                     <strong>Color:</strong> {product.color}

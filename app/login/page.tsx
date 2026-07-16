@@ -13,20 +13,20 @@ export default async function LoginPage({ searchParams }: Props) {
 
   return (
     <section className="container main">
-      <h1 className="page-title">Iniciar sesion</h1>
-      <p className="page-subtitle">Accede para ver tu carrito y comprar mas rapido.</p>
+      <h1 className="page-title">Iniciar sesión</h1>
+      <p className="page-subtitle">Accede para ver tu carrito y comprar más rápido.</p>
 
       <div className="summary-box auth-card">
         <form action={loginAction}>
           <input type="hidden" name="next" value={next ?? ""} />
           <div className="auth-grid">
             <div className="auth-field">
-              <label>Email</label>
-              <input className="auth-input" name="email" type="email" required />
+              <label htmlFor="loginEmail">Email</label>
+              <input className="auth-input" id="loginEmail" name="email" type="email" required />
             </div>
 
             <div className="auth-field">
-              <label>Contrasena</label>
+              <label htmlFor="loginPass">Contraseña</label>
               <PasswordField id="loginPass" name="password" required minLength={6} />
             </div>
 

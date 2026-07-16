@@ -40,9 +40,10 @@ export default async function CheckoutPage() {
         <form className="checkout-card" action={checkoutAction}>
           <div className="checkout-grid">
             <div className="field">
-              <label>Nombre completo</label>
+              <label htmlFor="checkoutFullName">Nombre completo</label>
               <input
                 className="input"
+                id="checkoutFullName"
                 name="full_name"
                 required
                 autoComplete="name"
@@ -51,9 +52,10 @@ export default async function CheckoutPage() {
             </div>
 
             <div className="field">
-              <label>WhatsApp / Celular</label>
+              <label htmlFor="checkoutPhone">WhatsApp / Celular</label>
               <input
                 className="input"
+                id="checkoutPhone"
                 name="phone"
                 required
                 autoComplete="tel"
@@ -62,10 +64,11 @@ export default async function CheckoutPage() {
             </div>
 
             <div className="field">
-              <label>Email</label>
+              <label htmlFor="checkoutEmail">Email</label>
               <input
                 className="input"
                 type="email"
+                id="checkoutEmail"
                 name="email"
                 required
                 autoComplete="email"
@@ -74,9 +77,10 @@ export default async function CheckoutPage() {
             </div>
 
             <div className="field">
-              <label>Ciudad</label>
+              <label htmlFor="checkoutCity">Ciudad</label>
               <input
                 className="input"
+                id="checkoutCity"
                 name="city"
                 required
                 autoComplete="address-level2"
@@ -85,9 +89,10 @@ export default async function CheckoutPage() {
             </div>
 
             <div className="field field-full">
-              <label>Direccion</label>
+              <label htmlFor="checkoutAddress">Dirección</label>
               <input
                 className="input"
+                id="checkoutAddress"
                 name="address"
                 required
                 autoComplete="street-address"
@@ -96,8 +101,8 @@ export default async function CheckoutPage() {
             </div>
 
             <div className="field field-full">
-              <label>Notas (opcional)</label>
-              <textarea className="input" name="notes" rows={3}></textarea>
+              <label htmlFor="checkoutNotes">Notas (opcional)</label>
+              <textarea className="input" id="checkoutNotes" name="notes" rows={3}></textarea>
               <div className="hint">Si quieres, deja color, talla o detalles del pedido.</div>
             </div>
           </div>

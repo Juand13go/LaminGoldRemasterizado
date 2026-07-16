@@ -82,7 +82,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
                 <strong>Ciudad:</strong> {order.city}
               </div>
               <div>
-                <strong>Direccion:</strong> {order.address}
+                <strong>Dirección:</strong> {order.address}
               </div>
               {order.notes && (
                 <div>

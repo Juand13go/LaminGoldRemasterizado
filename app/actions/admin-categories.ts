@@ -17,7 +17,7 @@ export async function createCategoryAction(formData: FormData): Promise<void> {
 
   if (!parsed.success) {
     redirect(
-      withFlash("/admin/categorias", "error", parsed.error.issues[0]?.message ?? "Datos invalidos.")
+      withFlash("/admin/categorias", "error", parsed.error.issues[0]?.message ?? "Datos inválidos.")
     );
   }
 
@@ -25,12 +25,12 @@ export async function createCategoryAction(formData: FormData): Promise<void> {
   const { error } = await supabase.from("categories").insert(parsed.data);
 
   if (error) {
-    redirect(withFlash("/admin/categorias", "error", "No se pudo crear la categoria (slug duplicado?)."));
+    redirect(withFlash("/admin/categorias", "error", "No se pudo crear la categoría (slug duplicado?)."));
   }
 
   revalidatePath("/admin/categorias");
   revalidatePath("/");
-  redirect(withFlash("/admin/categorias", "success", "Categoria creada."));
+  redirect(withFlash("/admin/categorias", "success", "Categoría creada."));
 }
 
 export async function deleteCategoryAction(formData: FormData): Promise<void> {
@@ -52,5 +52,5 @@ export async function deleteCategoryAction(formData: FormData): Promise<void> {
 
   revalidatePath("/admin/categorias");
   revalidatePath("/");
-  redirect(withFlash("/admin/categorias", "success", "Categoria eliminada."));
+  redirect(withFlash("/admin/categorias", "success", "Categoría eliminada."));
 }

@@ -6,7 +6,7 @@ import { FlashMessages } from "@/components/FlashMessages";
 
 export const metadata: Metadata = {
   title: "LAMIN GOLD",
-  description: "Joyeria en oro laminado premium.",
+  description: "Joyería en oro laminado premium.",
   icons: {
     icon: "/img/favicon.png",
     apple: "/img/favicon.png",

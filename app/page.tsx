@@ -32,13 +32,13 @@ export default async function HomePage() {
               Lamin Gold
             </h1>
             <p className="page-subtitle" style={{ maxWidth: 520, margin: "0 0 14px" }}>
-              Joyeria elegante, resistente y lista para regalo. Compra por categoria o explora
-              el catalogo completo.
+              Joyería elegante, resistente y lista para regalo. Compra por categoría o explora
+              el catálogo completo.
             </p>
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <Link className="btn" href="/catalogo" style={{ padding: "12px 16px" }}>
-                Ver catalogo
+                Ver catálogo
               </Link>
               {categories[0] && (
                 <Link
@@ -55,7 +55,7 @@ export default async function HomePage() {
               className="muted"
               style={{ marginTop: 12, display: "flex", gap: 16, flexWrap: "wrap" }}
             >
-              <span>&bull; Envios rapidos</span>
+              <span>&bull; Envíos rápidos</span>
               <span>&bull; Pagas por WhatsApp</span>
               <span>&bull; Calidad premium</span>
             </div>
@@ -85,8 +85,8 @@ export default async function HomePage() {
           }}
         >
           <div>
-            <div style={{ fontWeight: 900, fontSize: 18 }}>Comprar por categoria</div>
-            <div className="muted">Elige rapido lo que buscas.</div>
+            <div style={{ fontWeight: 900, fontSize: 18 }}>Comprar por categoría</div>
+            <div className="muted">Elige rápido lo que buscas.</div>
           </div>
           <Link className="btn-outline" href="/catalogo">
             Ver todo
@@ -102,7 +102,7 @@ export default async function HomePage() {
               style={{ textDecoration: "none" }}
             >
               <div className="card-body">
-                <div className="badge">Categoria</div>
+                <div className="badge">Categoría</div>
                 <div style={{ fontWeight: 900, fontSize: 18, marginTop: 6 }}>{category.label}</div>
                 <div className="muted" style={{ marginTop: 6 }}>
                   {category.description}
@@ -137,10 +137,10 @@ export default async function HomePage() {
           >
             <div>
               <h2 style={{ margin: 0, fontSize: 22 }}>{category.label}</h2>
-              <div className="muted">Destacados de esta categoria.</div>
+              <div className="muted">Destacados de esta categoría.</div>
             </div>
             <Link className="btn-outline" href={`/categoria/${category.slug}`}>
-              Ver mas
+              Ver más
             </Link>
           </div>
 
@@ -152,7 +152,7 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="summary-box" style={{ marginTop: 12 }}>
-              <strong>Aun no hay productos en {category.label}.</strong>
+              <strong>Aún no hay productos en {category.label}.</strong>
               <div className="muted" style={{ marginTop: 6 }}>
                 Agrega productos desde el panel de admin.
               </div>

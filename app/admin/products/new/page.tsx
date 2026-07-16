@@ -22,7 +22,7 @@ export default async function NewProductPage() {
           <h1 className="page-title" style={{ marginBottom: 6 }}>
             Nuevo producto
           </h1>
-          <p className="page-subtitle">Crear producto en el catalogo.</p>
+          <p className="page-subtitle">Crear producto en el catálogo.</p>
         </div>
         <Link className="btn-outline" href="/admin/products">
           Volver
@@ -30,7 +30,7 @@ export default async function NewProductPage() {
       </div>
 
       <div className="summary-box auth-card" style={{ marginTop: 14 }}>
-        <form action={createProductAction} encType="multipart/form-data">
+        <form action={createProductAction}>
           <div className="auth-grid">
             <div className="auth-field">
               <label>Nombre</label>
@@ -38,15 +38,15 @@ export default async function NewProductPage() {
             </div>
 
             <div className="auth-field">
-              <label>Precio (numero)</label>
+              <label>Precio (número)</label>
               <input className="auth-input" name="price" type="number" min={1} step="1" required />
             </div>
 
             <div className="auth-field">
-              <label>Categoria</label>
+              <label>Categoría</label>
               <select className="input" name="category_id" required defaultValue="">
                 <option value="" disabled>
-                  Selecciona una categoria
+                  Selecciona una categoría
                 </option>
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -54,11 +54,11 @@ export default async function NewProductPage() {
                   </option>
                 ))}
               </select>
-              <div className="hint">Crea categorias nuevas desde Admin &rarr; Categorias.</div>
+              <div className="hint">Crea categorías nuevas desde Admin &rarr; Categorías.</div>
             </div>
 
             <div className="auth-field">
-              <label>Descripcion</label>
+              <label>Descripción</label>
               <textarea className="auth-input" name="description" rows={3}></textarea>
             </div>
 
@@ -83,10 +83,10 @@ export default async function NewProductPage() {
             <div className="auth-field">
               <label style={{ display: "flex", gap: 10, alignItems: "center", fontWeight: 800 }}>
                 <input type="checkbox" name="is_active" defaultChecked style={{ transform: "scale(1.1)" }} />
-                Producto activo (visible en catalogo)
+                Producto activo (visible en catálogo)
               </label>
               <div className="muted" style={{ marginTop: 6 }}>
-                Si lo desmarcas, el producto queda guardado pero oculto del catalogo.
+                Si lo desmarcas, el producto queda guardado pero oculto del catálogo.
               </div>
             </div>
 

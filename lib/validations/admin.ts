@@ -5,9 +5,9 @@ export const categorySchema = z.object({
     .string()
     .trim()
     .min(1, "El slug es obligatorio.")
-    .regex(/^[a-z0-9-]+$/, "Usa solo minusculas, numeros y guiones."),
+    .regex(/^[a-z0-9-]+$/, "Usa solo minúsculas, números y guiones."),
   label: z.string().trim().min(1, "La etiqueta es obligatoria."),
-  title: z.string().trim().min(1, "El titulo es obligatorio."),
+  title: z.string().trim().min(1, "El título es obligatorio."),
   description: z.string().trim().optional().default(""),
   sort_order: z.coerce.number().int().default(0),
 });
@@ -16,7 +16,7 @@ export type CategoryInput = z.infer<typeof categorySchema>;
 
 export const productSchema = z.object({
   name: z.string().trim().min(1, "El nombre es obligatorio."),
-  category_id: z.string().uuid("Selecciona una categoria."),
+  category_id: z.string().uuid("Selecciona una categoría."),
   description: z.string().trim().optional().default(""),
   color: z.string().trim().min(1).optional().default("Dorado"),
   gold_type: z.string().trim().min(1).optional().default("18k"),

@@ -23,12 +23,12 @@ export function ProductCard({ product }: { product: CatalogProduct }) {
         <h3 className="card-title">{product.name}</h3>
 
         <p className="card-desc" style={!product.description ? { opacity: 0.7 } : undefined}>
-          {product.description || "Sin descripcion por ahora."}
+          {product.description || "Sin descripción por ahora."}
         </p>
 
         <div className="card-meta">
           <span>Color: {product.color}</span>
-          <span>Bano: {product.goldType}</span>
+          <span>Baño: {product.goldType}</span>
         </div>
 
         <div className="card-bottom">

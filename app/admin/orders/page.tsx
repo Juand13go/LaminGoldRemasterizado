@@ -35,9 +35,9 @@ export default async function AdminOrdersPage() {
 
       {!orders || orders.length === 0 ? (
         <div className="summary-box" style={{ marginTop: 14 }}>
-          <strong>No hay pedidos todavia.</strong>
+          <strong>No hay pedidos todavía.</strong>
           <p className="muted" style={{ marginTop: 6 }}>
-            Cuando un cliente confirme un checkout, apareceran aqui.
+            Cuando un cliente confirme un checkout, aparecerán aquí.
           </p>
         </div>
       ) : (

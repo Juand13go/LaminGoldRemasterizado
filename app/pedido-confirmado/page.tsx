@@ -51,7 +51,7 @@ export default async function OrderConfirmedPage({ searchParams }: Props) {
 
       <div className="summary-box">
         <div className="row">
-          <span>Codigo de pedido</span>
+          <span>Código de pedido</span>
           <strong>{order.id}</strong>
         </div>
       </div>

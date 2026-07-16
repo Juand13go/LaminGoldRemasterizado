@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getCategories } from "@/lib/products";
 import { createCategoryAction, deleteCategoryAction } from "@/app/actions/admin-categories";
 
-export const metadata = { title: "Admin - Categorias" };
+export const metadata = { title: "Admin - Categorías" };
 
 export default async function AdminCategoriesPage() {
   const categories = await getCategories();
@@ -20,9 +20,9 @@ export default async function AdminCategoriesPage() {
       >
         <div>
           <h1 className="page-title" style={{ marginBottom: 6 }}>
-            Categorias
+            Categorías
           </h1>
-          <p className="page-subtitle">Organiza las categorias del catalogo.</p>
+          <p className="page-subtitle">Organiza las categorías del catálogo.</p>
         </div>
         <Link className="btn-outline" href="/admin">
           Volver
@@ -30,7 +30,7 @@ export default async function AdminCategoriesPage() {
       </div>
 
       <div className="summary-box" style={{ marginTop: 14 }}>
-        <h3 style={{ margin: "0 0 12px" }}>Nueva categoria</h3>
+        <h3 style={{ margin: "0 0 12px" }}>Nueva categoría</h3>
         <form action={createCategoryAction} className="auth-grid">
           <div className="auth-field">
             <label>Slug</label>
@@ -41,19 +41,19 @@ export default async function AdminCategoriesPage() {
             <input className="auth-input" name="label" placeholder="Pulseras" required />
           </div>
           <div className="auth-field">
-            <label>Titulo</label>
+            <label>Título</label>
             <input className="auth-input" name="title" placeholder="Pulseras en oro laminado" required />
           </div>
           <div className="auth-field">
-            <label>Descripcion</label>
-            <input className="auth-input" name="description" placeholder="Estilo premium para el dia a dia." />
+            <label>Descripción</label>
+            <input className="auth-input" name="description" placeholder="Estilo premium para el día a día." />
           </div>
           <div className="auth-field">
             <label>Orden</label>
             <input className="auth-input" name="sort_order" type="number" defaultValue={0} />
           </div>
           <button className="btn" type="submit" style={{ marginTop: 6 }}>
-            + Nueva categoria
+            + Nueva categoría
           </button>
         </form>
       </div>

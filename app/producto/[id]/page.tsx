@@ -34,7 +34,7 @@ export default async function ProductDetailPage({ params }: Props) {
         }}
       >
         <Link className="btn-outline" href="/catalogo">
-          Volver al catalogo
+          Volver al catálogo
         </Link>
         <div className="badge">{product.category?.label ?? ""}</div>
       </div>
@@ -56,7 +56,7 @@ export default async function ProductDetailPage({ params }: Props) {
             {product.name}
           </h1>
           <p className="page-subtitle" style={{ marginBottom: 14 }}>
-            {product.description || "Sin descripcion por ahora."}
+            {product.description || "Sin descripción por ahora."}
           </p>
 
           <div className="product-meta">
@@ -64,7 +64,7 @@ export default async function ProductDetailPage({ params }: Props) {
               <span>Color:</span> <b>{product.color}</b>
             </div>
             <div>
-              <span>Bano:</span> <b>{product.goldType}</b>
+              <span>Baño:</span> <b>{product.goldType}</b>
             </div>
           </div>
 
@@ -90,10 +90,10 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
 
           <div className="summary-box" style={{ marginTop: 14 }}>
-            <h3 style={{ margin: "0 0 10px" }}>Garantia y cuidado</h3>
+            <h3 style={{ margin: "0 0 10px" }}>Garantía y cuidado</h3>
             <div style={{ opacity: 0.85, fontSize: 14, lineHeight: 1.5 }}>
-              Evita agua salada, perfumes directos y golpes fuertes. Limpia con pano suave. Si
-              tienes dudas, escribenos por WhatsApp y te asesoramos.
+              Evita agua salada, perfumes directos y golpes fuertes. Limpia con paño suave. Si
+              tienes dudas, escríbenos por WhatsApp y te asesoramos.
             </div>
           </div>
         </div>

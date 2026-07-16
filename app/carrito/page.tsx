@@ -93,9 +93,9 @@ export default async function CartPage() {
         </div>
       ) : (
         <div className="empty container" style={{ padding: "20px 0" }}>
-          <p className="muted">Tu carrito esta vacio.</p>
+          <p className="muted">Tu carrito está vacío.</p>
           <Link className="btn" href="/catalogo">
-            Ir al catalogo
+            Ir al catálogo
           </Link>
         </div>
       )}

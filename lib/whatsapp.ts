@@ -29,7 +29,7 @@ export function buildWhatsAppOrderUrl(order: WhatsAppOrderInfo): string {
     `Nombre: ${order.fullName}`,
     `WhatsApp: ${order.phone}`,
     `Ciudad: ${order.city}`,
-    `Direccion: ${order.address}`,
+    `Dirección: ${order.address}`,
     "",
     "Items:",
   ];
