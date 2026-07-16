@@ -11,13 +11,6 @@ in production, **P2** = tech debt / nice-to-have, safe to defer.
 
 ## Needs you specifically (no CLI/dashboard access available in-session)
 
-- **[P0] Vercel project not created/connected yet.** `vercel whoami` requires an
-  interactive device-code login (visit a URL, confirm in browser) that couldn't be
-  completed unattended. Run `npx vercel link` (and `vercel --prod` to deploy) yourself.
-- **[P0] Env vars not set in Vercel.** Same blocker as above — add
-  `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
-  `SUPABASE_SERVICE_ROLE_KEY`, `CART_COOKIE_SECRET`, `NEXT_PUBLIC_WHATSAPP_NUMBER`
-  under Project Settings -> Environment Variables once the project exists.
 - **[P1] Supabase Auth "Site URL" / "Redirect URLs" still point at localhost.** This
   no longer blocks login or registration (see "Fixed this pass" below), but will bite
   the moment a password-reset or magic-link flow is added, since neither exists yet.
@@ -33,6 +26,14 @@ in production, **P2** = tech debt / nice-to-have, safe to defer.
 
 ## Fixed this pass
 
+- **Vercel project created and connected.** The project (`lamin-gold-remasterizado`,
+  team `juand13gos-projects`) already existed and had all required env vars set for
+  Production + Preview (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
+  `SUPABASE_SERVICE_ROLE_KEY`, `CART_COOKIE_SECRET`, `NEXT_PUBLIC_WHATSAPP_NUMBER`) —
+  linked the local repo to it (`vercel link`) and confirmed the last 3 deployments are
+  all `Ready`, with `https://lamin-gold-remasterizado.vercel.app` responding 200 on
+  `/` and `/catalogo`. Git is connected so every push auto-deploys. Not set for the
+  Development environment (local dev uses `.env.local` directly, so not required).
 - **Register -> login bug (the reported critical bug).** Root cause: Supabase Auth's
   "Confirm email" setting was on, the confirmation email's redirect pointed at
   localhost (see above), and the app had no fallback — new accounts were created but
