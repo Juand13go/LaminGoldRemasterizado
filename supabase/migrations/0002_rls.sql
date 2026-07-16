@@ -14,7 +14,10 @@ as $$
   );
 $$;
 
--- Prevent a buyer from granting themselves admin via a profile update.
+-- Prevent a buyer from granting themselves admin via a profile update. auth.uid() is
+-- null for service_role/direct-SQL callers (migrations, admin bootstrap scripts) since
+-- they're outside a PostgREST user session entirely — those already bypass RLS, so this
+-- trigger only needs to stop an authenticated end user from escalating their own role.
 create or replace function public.prevent_role_self_escalation()
 returns trigger
 language plpgsql
@@ -22,7 +25,7 @@ security definer
 set search_path = public
 as $$
 begin
-  if new.role <> old.role and not public.is_admin() then
+  if new.role <> old.role and auth.uid() is not null and not public.is_admin() then
     raise exception 'Only an admin can change a profile role.';
   end if;
   return new;
