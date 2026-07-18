@@ -1,75 +1,51 @@
 # TODO / Known Gaps
 
-Updated after the pass that fixed the register/login bug, closed the Spanish-accents
-sweep, added image-upload validation + rate limiting, and ran the full
-register -> login -> cart -> checkout and admin-product-creation flows live through a
-real browser via Playwright (previously unrun). `npm run lint`, `typecheck`, `test`
-(32 unit tests), and `build` all pass.
+Updated after the pass that closed out the four remaining P1s: confirmed CI green,
+fixed the Supabase Auth Site URL, confirmed the WhatsApp number, and ran the real
+Appwrite -> Supabase product migration (`npm run lint`, `typecheck`, `test`, and
+`build` were not re-run this pass — no app code changed besides the migration
+script fix noted below).
 
 Priority: **P0** = blocks going live / real bug, **P1** = should fix before trusting it
 in production, **P2** = tech debt / nice-to-have, safe to defer.
 
-## Needs you specifically (no CLI/dashboard access available in-session)
-
-- **[P1] Supabase Auth "Site URL" / "Redirect URLs" still point at localhost.** This
-  no longer blocks login or registration (see "Fixed this pass" below), but will bite
-  the moment a password-reset or magic-link flow is added, since neither exists yet.
-  Update it in the dashboard (Authentication -> URL Configuration) before adding either.
-- **[P1] `NEXT_PUBLIC_WHATSAPP_NUMBER` is the legacy hardcoded number
-  (`573160438565`), copied as-is.** Confirm this is really the number that should
-  receive production orders before launch.
-- **[P1] GitHub Actions CI has never been confirmed green.** `gh` CLI isn't installed
-  in this environment — check the Actions tab on GitHub directly.
-- **[P1] `scripts/migrate-from-appwrite.ts` has never been run or tested**, against
-  real Appwrite data or otherwise — no Appwrite credentials were available this
-  session either. Run with `--dry-run` first against real data before trusting it.
-
 ## Fixed this pass
 
-- **Vercel project created and connected.** The project (`lamin-gold-remasterizado`,
-  team `juand13gos-projects`) already existed and had all required env vars set for
-  Production + Preview (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`,
-  `SUPABASE_SERVICE_ROLE_KEY`, `CART_COOKIE_SECRET`, `NEXT_PUBLIC_WHATSAPP_NUMBER`) —
-  linked the local repo to it (`vercel link`) and confirmed the last 3 deployments are
-  all `Ready`, with `https://lamin-gold-remasterizado.vercel.app` responding 200 on
-  `/` and `/catalogo`. Git is connected so every push auto-deploys. Not set for the
-  Development environment (local dev uses `.env.local` directly, so not required).
-- **Register -> login bug (the reported critical bug).** Root cause: Supabase Auth's
-  "Confirm email" setting was on, the confirmation email's redirect pointed at
-  localhost (see above), and the app had no fallback — new accounts were created but
-  stuck `email_confirmed_at: null` forever, with no error shown to the user. Fixed by
-  having `registerAction` (`app/actions/auth.ts`) create accounts via
-  `admin.auth.admin.createUser({ email_confirm: true })` and sign the user in directly,
-  skipping email confirmation entirely rather than depending on dashboard config —
-  reasonable for a small storefront with low signup volume. The two real accounts that
-  were stuck unconfirmed from earlier manual testing
-  (`ramirezrendonjuandiego@gmail.com`, `ramirezrendonjuandiego1@gmail.com`) were
-  retroactively confirmed via the admin API so they aren't left behind.
-- **Missing accents/ñ across the UI** — swept `app/`, `lib/`, and `components/`
-  (labels, flash messages, Zod error strings, a few CSS comments).
-- **No server-side validation on uploaded product images** — `app/actions/
-  admin-products.ts` now checks a 5MB size cap and sniffs the real file format from
-  magic bytes (jpg/png/webp) instead of trusting the client-supplied `File.type`.
-- **No rate-limiting on login/register/checkout** — added a Postgres-backed sliding
-  window limiter (`check_rate_limit` RPC + `rate_limits` table,
-  `supabase/migrations/0006_rate_limit.sql`, wired up via `lib/rate-limit.ts`).
-  Deliberately Postgres-backed rather than in-memory since Vercel serverless functions
-  don't share memory across invocations. Applied to the live project and verified live
-  (direct RPC calls confirmed it allows N attempts then blocks, as designed).
-- **Full checkout flow, register flow, and admin product creation were "never
-  exercised through a real browser"** — all three now have Playwright specs
-  (`tests/e2e/checkout.spec.ts`, `tests/e2e/register.spec.ts`,
-  `tests/e2e/admin-products.spec.ts`) that were actually run against a real Chromium
-  browser and pass. Browsers are now installed (`npx playwright install chromium`).
-  Two real bugs in the test setup were found and fixed along the way: form labels
-  weren't associated with their inputs (`htmlFor`/`id` added across login/register/
-  checkout — also a real accessibility fix, not just a test workaround), and the
-  checkout spec had a race condition (navigated to `/carrito` before the add-to-cart
-  Server Action's background request had finished).
-- A dedicated confirmed test account exists for CI/local e2e runs:
-  `e2e-fixture@laminogold.test` / `E2eFixture123!` (used as `TEST_USER_EMAIL`/
-  `TEST_USER_PASSWORD`). The register and admin-product specs create and clean up
-  their own throwaway accounts per run instead of relying on a fixed fixture.
+- **Supabase Auth "Site URL" / "Redirect URLs" no longer point at localhost.**
+  Updated via the Supabase Management API (`PATCH /v1/projects/{ref}/config/auth`)
+  to `https://lamin-gold-remasterizado.vercel.app`, with `http://localhost:3000/**`
+  (dev) and `https://lamin-gold-remasterizado-*.vercel.app/**` (previews) in the
+  redirect allow list. Safe now to add password-reset / magic-link flows.
+- **`NEXT_PUBLIC_WHATSAPP_NUMBER` confirmed** — `573160438565` is the correct
+  production number, no change needed.
+- **GitHub Actions CI confirmed green** — last 5 runs on `main` all passed
+  (`gh run list`).
+- **Appwrite -> Supabase product migration run for real**, products only
+  (`npm run migrate:appwrite -- --products-only`). Migrated 2 real products
+  ("Pulsera De Balin Continuo", "Pulsera tejida Trebol"), images re-uploaded to
+  Supabase Storage and verified reachable (200). Users and orders in the old
+  Appwrite project were confirmed to be test data only (not real customers/orders)
+  and were deliberately **not** migrated — `scripts/migrate-from-appwrite.ts` got a
+  new `--products-only` flag for this. The password/invite tradeoff for migrating
+  users (documented at the top of that script) is therefore moot; nothing left to
+  decide there.
+- **Fixed a real bug in `scripts/migrate-from-appwrite.ts`**: it documented reading
+  Supabase credentials from the repo root `.env.local` but never actually loaded
+  that file (only bare `dotenv/config`, which reads `.env`, not `.env.local`) — the
+  dry run failed with "Missing required env var" until this was fixed. It now
+  explicitly loads `../.env.local` then `./.env`.
+- **`scripts/.env.example` documents three new local-tooling-only vars**
+  (`SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, `GH_TOKEN`) used to let Claude
+  Code act against Supabase's Management API and `gh` non-interactively from this
+  machine. Placeholders only — real values live in the gitignored `scripts/.env`.
+
+## Content
+
+- **[P1] Catalog still has only 3 products**: the 2 real ones migrated this pass
+  plus the original test product ("Pulsera Oro Laminado Clasica (prueba)"). Decide
+  whether to delete the test product before launch, and add the rest of the real
+  catalog by hand through `/admin/products` (the Appwrite source only had those 2
+  real products — nothing more to migrate from there).
 
 ## Never exercised through a real browser
 
@@ -119,9 +95,3 @@ in production, **P2** = tech debt / nice-to-have, safe to defer.
 - **[P2] Flash messages are carried via `?type=&msg=` query params**, which means
   they persist across a page refresh/reload and show up in browser history. Minor
   UX nit, not a functional bug.
-
-## Content
-
-- **[P1] Only one test product exists** ("Pulsera Oro Laminado Clasica (prueba)").
-  The real catalog still needs to be created, either by hand through `/admin/products`
-  or via the (unrun) Appwrite migration script.

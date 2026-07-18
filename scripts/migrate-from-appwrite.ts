@@ -19,17 +19,21 @@
  * run, since it contacts real customers.
  *
  * Run with --dry-run first to see counts/mappings without writing anything.
+ * Pass --products-only to migrate only categories/products (skip users and orders
+ * entirely) — useful when you want the catalog moved over without deciding yet how
+ * to handle the password/invite tradeoff above.
  */
-import "dotenv/config";
 import path from "node:path";
 import { config as loadEnv } from "dotenv";
 import { Client as AppwriteClient, Databases, Storage, Query } from "node-appwrite";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
+loadEnv({ path: path.resolve(__dirname, "..", ".env.local") });
 loadEnv({ path: path.resolve(__dirname, ".env") });
 
 const DRY_RUN = process.argv.includes("--dry-run");
 const SEND_INVITES = process.argv.includes("--send-invites");
+const PRODUCTS_ONLY = process.argv.includes("--products-only");
 
 const TABLE_USERS = "users";
 const TABLE_PRODUCTS = "products";
@@ -302,6 +306,12 @@ async function main() {
 
   const productIdMap = await migrateProducts(categoryBySlug);
   console.log(`Migrated ${productIdMap.size} products.`);
+
+  if (PRODUCTS_ONLY) {
+    console.log("--products-only set: skipping users and orders.");
+    console.log("Done.");
+    return;
+  }
 
   const userIdMap = await migrateUsers();
   console.log(`Migrated ${userIdMap.size} users.`);
