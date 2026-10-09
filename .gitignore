@@ -45,3 +45,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# private notes: credentials + business/pricing info, never meant for the public repo
+OPERACIONES.md

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getAllProductsAdmin } from "@/lib/products";
 import { formatCOP } from "@/lib/format";
-import { deleteProductAction } from "@/app/actions/admin-products";
+import { DeleteProductButton } from "@/components/admin/DeleteProductButton";
 
 export const metadata = { title: "Admin - Productos" };
 
@@ -93,16 +93,7 @@ export default async function AdminProductsPage() {
                   <Link className="btn-outline" href={`/producto/${product.id}`}>
                     Ver
                   </Link>
-                  <form action={deleteProductAction}>
-                    <input type="hidden" name="id" value={product.id} />
-                    <button
-                      className="btn-outline"
-                      type="submit"
-                      style={{ borderColor: "#c0392b", color: "#c0392b" }}
-                    >
-                      Eliminar
-                    </button>
-                  </form>
+                  <DeleteProductButton id={product.id} name={product.name} />
                 </div>
               </div>
             </div>
