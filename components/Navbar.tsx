@@ -48,6 +48,9 @@ export async function Navbar() {
                   Admin
                 </Link>
               )}
+              <Link className="navlink" href="/cuenta">
+                Mi cuenta
+              </Link>
               <form action={logoutAction}>
                 <button className="navlink" type="submit">
                   Salir

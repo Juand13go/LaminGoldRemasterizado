@@ -41,6 +41,16 @@ export default function AdminDashboardPage() {
 
         <div className="cart__item" style={{ gridTemplateColumns: "1fr auto" }}>
           <div>
+            <div style={{ fontWeight: 900, fontSize: 18 }}>Mi cuenta</div>
+            <div className="muted">Cambiar la contraseña del admin</div>
+          </div>
+          <Link className="btn-outline" href="/cuenta">
+            Gestionar
+          </Link>
+        </div>
+
+        <div className="cart__item" style={{ gridTemplateColumns: "1fr auto" }}>
+          <div>
             <div style={{ fontWeight: 900, fontSize: 18 }}>Volver al catálogo</div>
             <div className="muted">Ir a la tienda como cliente</div>
           </div>

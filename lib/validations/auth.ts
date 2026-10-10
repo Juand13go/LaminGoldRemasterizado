@@ -23,3 +23,16 @@ export const registerSchema = z
   });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
+
+export const changePasswordSchema = z
+  .object({
+    current_password: z.string().min(1, "Ingresa tu contraseña actual."),
+    password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
+    password2: z.string().min(1, "Confirma tu nueva contraseña."),
+  })
+  .refine((data) => data.password === data.password2, {
+    message: "Las contraseñas no coinciden.",
+    path: ["password2"],
+  });
+
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
